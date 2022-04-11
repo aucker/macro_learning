@@ -10,20 +10,20 @@ macro_rules! recurrence {
             use std::ops::Index;
 
         struct Recurrence {
-            mem: [u64; 2],
+            mem: [$sty; 2],
             pos: usize,
         }
         // This is the actual iterator type. `mem` will be the memo buffer to hold the last few values so the recurrence
         // can be computed. `pos` is to keep track of the value of `n`.
 
         struct IndexOffset<'a> {
-            slice: &'a [u64; 2],
+            slice: &'a [$sty; 2],
             offset: usize,
         }
         impl<'a> Index<usize> for IndexOffset<'a> {
-            type Output = u64;
+            type Output = $sty;
 
-            fn index<'b>(&'b self, index: usize) -> &'b u64 {
+            fn index<'b>(&'b self, index: usize) -> &'b $sty {
                 use std::num::Wrapping;
 
                 let index = Wrapping(index);
@@ -48,8 +48,8 @@ macro_rules! recurrence {
         /// `'b` to one another, we don't accidentally violet memory safety.
 
         impl Iterator for Recurrence {
-            type Item = u64;
-            fn next(&mut self) -> Option<u64> {
+            type Item = $sty;
+            fn next(&mut self) -> Option<$sty> {
                 if self.pos < 2 {
                     let next_val = self.mem[self.pos];
                     self.pos += 1;
