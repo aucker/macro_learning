@@ -46,6 +46,18 @@ fn main() {
                 &self.slice[real_index.0]
             }
         }
+        
+        /// Lifetime in Rust
+        /// `'a` and `'b` are lifetime parameters that are used to track where a reference
+        /// (i.e. a borrowed pointer to some data) is valid. In this case, `IndexOffset` 
+        /// borrows a reference to the iterator's data, so it needs to keep track of how long
+        /// it's allowed to hold that reference for, using `'a` 
+        ///
+        /// `'b` is used because the `Index::index` function (which is how subscript syntax is
+        /// actually implemented) is *also* parameterized on a lifetime, on account of returning
+        /// a borrowed reference. `'a` and `'b` are not necessarily the same thing in all cases.
+        /// The borrow checker will make sure that even though we don't explicity relate `'a` and
+        /// `'b` to one another, we don't accidentally violet memory safety.
 
         impl Iterator for Recurrence {
             type Item = u64;
