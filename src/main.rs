@@ -112,8 +112,12 @@ fn main() {
     // let fib = recurrence![a[n]: u64 = 0, 1, ..., a[n-1] + a[n-2]];
     // note: this won't work, we will get local ambiguity error
 
-    let fib = recurrence![a[n]: u64 = 0, 1; ... ;a[n-1] + a[n-2]];
-    for e in fib.take(10) {
-        println!("{}", e)
+    // let fib = recurrence![a[n]: u64 = 0, 1; ... ;a[n-1] + a[n-2]];
+    // for e in fib.take(10) {
+    //     println!("{}", e)
+    // }
+
+    for e in recurrence!(f[i]: f64 = 1.0; ...; f[i-1] * i as f64).take(10) {
+        println!("{}", e);
     }
 }
